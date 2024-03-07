@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Login from './Login.tsx';
 import MyPage from './MyPage.tsx';
+import { Authenticator } from '@aws-amplify/ui-react';
 
 Amplify.configure(amplifyconfig);
 
@@ -22,9 +23,7 @@ const checkForUser = async () => {
   // and redirect to /login if no
   try {
     await getCurrentUser();
-    console.log('hello');
   } catch (error) {
-    console.log(error);
     // if you know you can't render the route, you can
     // throw a redirect to stop executing code here,
     // sending the user to a new route
@@ -53,6 +52,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Authenticator.Provider>
+      <RouterProvider router={router} />
+    </Authenticator.Provider>
   </React.StrictMode>,
 )
